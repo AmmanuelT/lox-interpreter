@@ -62,7 +62,6 @@ void Lox::runPrompt(){
         }
         // TODO
         run(line);
-        std::cout << line << std::endl;
         hadError = false;
     }
 }
@@ -82,7 +81,5 @@ void Lox::main(int argc, char* argv[]){
 
 int main(int argc, char* argv[]){
     Lox lox = Lox();
-    std::cout << argc << std::endl;
-    std::cout << argv;
     lox.main(argc,argv);
 }
