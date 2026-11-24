@@ -82,9 +82,8 @@ void defineAst(std::string outputDir, std::string baseName, std::vector<std::str
     file << generateBase(baseName);
 
     for (std::string str: types){
-        std::vector<std::string> spl = split(str, ":");
-        std::string type = strip(spl[0]);
-        std::vector<std::vector<std::string>> attributes = splitAttributes(spl[1]);
+        std::string type = strip(str.substr(0,str.find(':')));
+        std::vector<std::vector<std::string>> attributes = splitAttributes(str.substr(str.find(':') + 1, str.size()));
         file << generateDerived(baseName, type, attributes);
     }
     

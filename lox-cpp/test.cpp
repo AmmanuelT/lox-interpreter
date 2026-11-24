@@ -18,9 +18,9 @@ class Grouping : public Expr{
 };
 
 class Literal : public Expr{
-    const std ;
-    Literal(std ):
-    ()
+    const std::string value;
+    Literal(std::string value):
+    value(value)
     {}
 };
 
