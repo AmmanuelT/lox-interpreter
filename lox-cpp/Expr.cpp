@@ -5,21 +5,37 @@
 #include "Expr.h"
 #include "Token.h"
 #include <iostream>
+#include "AstPrinter.h"
 
-
-template<typename R> R Unary::accept(Visitor<R> *visitor){
+std::string Unary::accept(Visitor *visitor){
     return visitor->visitUnaryExpr(this);
 };
 
-template<typename R> R Binary::accept(Visitor<R> *visitor){
+std::string Binary::accept(Visitor *visitor){
     return visitor->visitBinaryExpr(this);
 };
 
-template<typename R> R Grouping::accept(Visitor<R> *visitor){
+std::string Grouping::accept(Visitor *visitor){
     return visitor->visitGroupingExpr(this);
 };
 
-template<typename R> R Literal::accept(Visitor<R> *visitor){
+std::string Literal::accept(Visitor *visitor){
+    return visitor->visitLiteralExpr(this);
+};
+
+std::string Unary::accept(AstPrinter* visitor){
+    return visitor->visitUnaryExpr(this);
+};
+
+std::string Binary::accept(AstPrinter* visitor){
+    return visitor->visitBinaryExpr(this);
+};
+
+std::string Grouping::accept(AstPrinter* visitor){
+    return visitor->visitGroupingExpr(this);
+};
+
+std::string Literal::accept(AstPrinter* visitor){
     return visitor->visitLiteralExpr(this);
 };
 

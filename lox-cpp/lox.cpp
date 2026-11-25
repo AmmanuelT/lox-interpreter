@@ -71,10 +71,11 @@ void Lox::main(int argc, char* argv[]){
     if (argc > 2){
         std::cout << "Usage: jlox [script]" << "\n";
     } else if ( argc == 2) {
-        if (strcmp(argv[2], "testParser") == 0){
+        if (strcmp(argv[1], "testParser") == 0){
             Test();
+        }  else{
+         //runFile(argv[0]);
         }
-        runFile(argv[0]);
     } else{
         runPrompt();
     }

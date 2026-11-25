@@ -6,21 +6,22 @@
 #include <iostream>
 
 
-std::string AstPrinter::print(Expr expr) {
-    return expr.accept(this);
+
+std::string AstPrinter::print(Expr* expr) {
+    return expr->accept(this);
 }
-
-
 
 std::string AstPrinter::visitBinaryExpr(Binary* expr) {
     std::vector<Expr> exprs = {expr->left, expr->right};
-    return parenthesize(exprs, expr->op.lexeme);
+    std::string name = expr->op.lexeme;
+    return parenthesize(exprs, name);
 }
 
 
 std::string AstPrinter::visitGroupingExpr(Grouping* expr) {
     std::vector<Expr> exprs = {expr->expression};
-    return parenthesize({expr->expression}, "group");
+    std::string name = "group";
+    return parenthesize(exprs, name);
 }
 
 
@@ -31,7 +32,8 @@ std::string AstPrinter::visitLiteralExpr(Literal* expr) {
 
 std::string AstPrinter::visitUnaryExpr(Unary* expr) {
     std::vector<Expr> exprs = { expr->right};
-    return parenthesize( {expr->right}, expr->op.lexeme);
+    std::string name = expr->op.lexeme;
+    return parenthesize( exprs, name);
 }
 
 std::string AstPrinter::parenthesize(std::vector<Expr> exprs, std::string name) {
@@ -52,14 +54,14 @@ std::string AstPrinter::parenthesize(std::vector<Expr> exprs, std::string name) 
 
 
 void Test() {
-    // Expr expression = Binary(
-    //     Unary(
-    //         Token(MINUS, "-", "", 1),
-    //         Literal("123")),
-    //     Token(STAR, "*", "", 1),
-    //     Grouping(
-    //         Literal("45.67")));
-    // AstPrinter printer = AstPrinter();
-    // std::cout << printer.print(expression);
+    Expr expression = Binary(
+        Unary(
+            Token(MINUS, "-", "", 1),
+            Literal("123")),
+        Token(STAR, "*", "", 1),
+        Grouping(
+            Literal("45.67")));
+    AstPrinter printer = AstPrinter();
+    std::cout << printer.print(expression);
     std::cout << "test";
 }

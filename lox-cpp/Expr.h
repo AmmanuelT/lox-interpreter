@@ -2,14 +2,16 @@
 #define EXPR_H
 #include "Token.h"
 #include "TokenType.h"
+#include "AstPrinter.h"
+#include "Visitor.h"
 
-
-template<typename R> class Visitor;
+class Visitor;
+class AstPrinter;
 
 class Expr {
     public:
-    template<typename R> R accept(Visitor<R> *visitor);
-    
+    virtual std::string accept(Visitor *visitor);
+    virtual std::string accept(AstPrinter* visitor);
 };
 
 class Binary : public Expr{
@@ -20,7 +22,8 @@ class Binary : public Expr{
     Binary(Expr left, Token op, Expr right):
     left(left), op(op), right(right)
     {}
-    template<typename R> R accept(Visitor<R> *visitor);
+    std::string accept(Visitor *visitor);
+    std::string accept(AstPrinter* visitor);
 };
 
 class Grouping : public Expr{
@@ -29,7 +32,8 @@ class Grouping : public Expr{
     Grouping(Expr expression):
     expression(expression)
     {}
-    template<typename R> R accept(Visitor<R> *visitor);
+    std::string accept(Visitor *visitor);
+    std::string accept(AstPrinter* visitor);
 };
 
 class Literal : public Expr{
@@ -38,7 +42,8 @@ class Literal : public Expr{
     Literal(std::string value):
     value(value)
     {}
-    template<typename R> R accept(Visitor<R> *visitor);
+    std::string accept(Visitor *visitor);
+    std::string accept(AstPrinter* visitor);
 };
 
 class Unary : public Expr{
@@ -48,7 +53,8 @@ class Unary : public Expr{
     Unary(Token op, Expr right):
     op(op), right(right)
     {}
-    template<typename R> R accept(Visitor<R> *visitor);
+    std::string accept(Visitor *visitor);
+    std::string accept(AstPrinter* visitor);
 };
 
 
