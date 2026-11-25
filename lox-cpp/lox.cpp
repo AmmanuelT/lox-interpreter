@@ -3,7 +3,7 @@
 #include "lox.h"
 #include "Scanner.h"
 #include "Token.h"
-
+# include "AstPrinter.h"
 bool Lox::hadError = false;
 
 void Lox::report(int line, std::string where, std::string message){
@@ -71,6 +71,9 @@ void Lox::main(int argc, char* argv[]){
     if (argc > 2){
         std::cout << "Usage: jlox [script]" << "\n";
     } else if ( argc == 2) {
+        if (strcmp(argv[2], "testParser") == 0){
+            Test();
+        }
         runFile(argv[0]);
     } else{
         runPrompt();

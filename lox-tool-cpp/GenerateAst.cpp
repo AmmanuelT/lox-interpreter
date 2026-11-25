@@ -1,5 +1,6 @@
 #include<iostream>
 #include <fstream>
+#include <ostream>
 #include <string>
 #include <algorithm>
 
@@ -44,9 +45,6 @@ std::vector<std::vector<std::string>> splitAttributes(std::string str){
     return attributes;
 }
 
-std::string generateBase(std::string baseName){
-    return "class " + baseName + " {};\n";
-}
 
 std::string generateDerived(std::string baseName, std::string className, std::vector<std::vector<std::string>> attributes){
     std::string classDeclaration = "class " + className + " : public " + baseName + "{\n";
@@ -75,11 +73,20 @@ std::string generateDerived(std::string baseName, std::string className, std::ve
 
 }
 
+// std::string defineVisitor( std::string baseName, types){
+//     std::String
+//     return "template<typename R> R accept(Visitor<R> visitor) const";
+// };
+
 void defineAst(std::string outputDir, std::string baseName, std::vector<std::string> types){
     std::string path = "../" + outputDir;
     std::ofstream file(path, std::ios::out);
     file << "#include \"Token.h\"\n\n";
-    file << generateBase(baseName);
+    file << "class " + baseName + " {\n";
+    file << "    public:\n";
+    //file << defineVisitor(baseName);
+    file << "};\n\n";
+    
 
     for (std::string str: types){
         std::string type = strip(str.substr(0,str.find(':')));

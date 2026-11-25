@@ -23,7 +23,7 @@ class Scanner{
 
     void addToken(TokenType type);
 
-    void addToken(TokenType type, std::string literal);
+    void addToken(TokenType type, std::any literal);
     
     char advance();
 

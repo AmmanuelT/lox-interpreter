@@ -1,9 +1,11 @@
 #include <cctype>
 #include <iostream>
+#include <any>
 #include "Token.h"
 #include "TokenType.h"
 #include "Scanner.h"
 #include "lox.h"
+
 
 Scanner::Scanner(std::string source):
 source(source)
@@ -106,10 +108,10 @@ char Scanner::advance(){
 }
 
 void Scanner::addToken(TokenType type){
-    addToken(type, "");
+    addToken(type, {});
 }
 
-void Scanner::addToken(TokenType type, std::string literal){
+void Scanner::addToken(TokenType type, std::any literal){
     std::string text = source.substr(start, current);
     tokens.push_back(Token(type, text, literal, line));
 }
