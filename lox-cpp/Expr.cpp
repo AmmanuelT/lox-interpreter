@@ -4,40 +4,25 @@
 #include "TokenType.h"
 #include "Expr.h"
 #include "Token.h"
+#include <any>
 #include <iostream>
 #include "AstPrinter.h"
 
-std::string Unary::accept(Visitor *visitor){
-    return visitor->visitUnaryExpr(this);
+std::any UnaryExpr::accept(std::shared_ptr<Visitor<std::any>> visitor) const{
+    return visitor->visitUnaryExpr(*this);
 };
 
-std::string Binary::accept(Visitor *visitor){
-    return visitor->visitBinaryExpr(this);
-};
+// std::any BinaryExpr::accept(Visitor<std::any>& visitor) const{
+//     return visitor.visitBinaryExpr(*this);
+// };
 
-std::string Grouping::accept(Visitor *visitor){
-    return visitor->visitGroupingExpr(this);
-};
+// std::any GroupingExpr::accept(Visitor<std::any>& visitor) const{
+//     return visitor.visitGroupingExpr(*this);
+// };
 
-std::string Literal::accept(Visitor *visitor){
-    return visitor->visitLiteralExpr(this);
-};
-
-std::string Unary::accept(AstPrinter* visitor){
-    return visitor->visitUnaryExpr(this);
-};
-
-std::string Binary::accept(AstPrinter* visitor){
-    return visitor->visitBinaryExpr(this);
-};
-
-std::string Grouping::accept(AstPrinter* visitor){
-    return visitor->visitGroupingExpr(this);
-};
-
-std::string Literal::accept(AstPrinter* visitor){
-    return visitor->visitLiteralExpr(this);
-};
+// std::any LiteralExpr::accept(Visitor<std::any>& visitor) const{
+//     return visitor.visitLiteralExpr(*this);
+// };
 
 
 

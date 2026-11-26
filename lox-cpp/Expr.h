@@ -4,57 +4,55 @@
 #include "TokenType.h"
 #include "AstPrinter.h"
 #include "Visitor.h"
+#include <memory>
 
-class Visitor;
+
+template<typename R> class Visitor;
 class AstPrinter;
 
 class Expr {
     public:
-    virtual std::string accept(Visitor *visitor);
-    virtual std::string accept(AstPrinter* visitor);
+    virtual std::any accept(std::shared_ptr<Visitor<std::any>> visitor) const;
 };
 
-class Binary : public Expr{
-    public:
-    const Expr left;
-    const Token op;
-    const Expr right;
-    Binary(Expr left, Token op, Expr right):
-    left(left), op(op), right(right)
-    {}
-    std::string accept(Visitor *visitor);
-    std::string accept(AstPrinter* visitor);
-};
+// class BinaryExpr : public Expr{
+//     public:
+//     const Expr left;
+//     const Token op;
+//     const Expr right;
+//     BinaryExpr (Expr left, Token op, Expr right):
+//     left(left), op(op), right(right)
+//     {}
+//     virtual std::any  accept(Visitor<std::any>& visitor) const;
 
-class Grouping : public Expr{
-    public:
-    const Expr expression;
-    Grouping(Expr expression):
-    expression(expression)
-    {}
-    std::string accept(Visitor *visitor);
-    std::string accept(AstPrinter* visitor);
-};
+// };
 
-class Literal : public Expr{
+// class GroupingExpr : public Expr{
+//     public:
+//     const Expr expression;
+//     GroupingExpr(Expr expression):
+//     expression(expression)
+//     {}
+//     virtual std::any  accept(Visitor<std::any>& visitor) const;
+// };
+
+class LiteralExpr : public Expr{
     public:
     const std::string value;
-    Literal(std::string value):
+    LiteralExpr(std::string value):
     value(value)
     {}
-    std::string accept(Visitor *visitor);
-    std::string accept(AstPrinter* visitor);
+    virtual std::any accept(std::shared_ptr<Visitor<std::any>> visitor) const;
 };
 
-class Unary : public Expr{
+class UnaryExpr : public Expr{
     public:
     const Token op;
     const Expr right;
-    Unary(Token op, Expr right):
+    UnaryExpr(Token op, Expr right):
     op(op), right(right)
     {}
-    std::string accept(Visitor *visitor);
-    std::string accept(AstPrinter* visitor);
+    virtual std::any accept(std::shared_ptr<Visitor<std::any>> visitor) const;
 };
 
 
